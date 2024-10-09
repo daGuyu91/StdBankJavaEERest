@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mongo:
+    ports:
+      - '27017:27017'
+    container_name: mongodb
+    restart: always
+    logging:
+      options:
+        max-size: 1g
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    image: mongo
+
+  myapp:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo-data:
