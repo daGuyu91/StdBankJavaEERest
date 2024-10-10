@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductController {
 
     @Inject
-    public ProductService productService;
+    private ProductService productService;
 
     public ProductController() {
     }

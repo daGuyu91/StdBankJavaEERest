@@ -28,11 +28,12 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             String encodedCredentials = authHeader.substring("Basic ".length()).trim();
             String credentials = new String(Base64.getDecoder().decode(encodedCredentials));
             String[] values = credentials.split(":", 2);
-            String username = values[0];
-            String password = values[1];
+            String name = values[0];
+            String email = values[1];
 
+            System.out.println("Name: " + name + ", Email: " + email);
             // Validate credentials
-            if (!"user".equals(username) || !"password".equals(password)) {
+            if (!"Joshua".equals(name) || !"jtenyiko@gmail.com".equals(email)) {
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
             }
         }
