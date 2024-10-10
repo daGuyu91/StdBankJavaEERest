@@ -6,6 +6,7 @@ import org.bson.Document;
 import za.co.standardbank.config.MongoDBConfig;
 import za.co.standardbank.model.Product;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
