@@ -1,7 +1,9 @@
 package za.co.standardbank.controller;
-import za.co.standardbank.repository.UserRepository;
 import za.co.standardbank.model.User;
+import za.co.standardbank.service.user.UserService;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -9,25 +11,30 @@ import java.util.List;
 
 @Path("/users")
 public class UserController {
-    private final UserRepository userRepository = new UserRepository();
+
+    @Inject
+    private UserService userService;
+
+    public UserController() {
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.findAllUser();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User getUserById(@PathParam("id") String id) {
-        return userRepository.findById(id);
+        return userService.findById(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(User user) {
-        userRepository.save(user);
+        userService.createUser(user);
         return Response.status(Response.Status.CREATED).build();
     }
 
@@ -36,14 +43,14 @@ public class UserController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(@PathParam("id") String id, User user) {
         user.setId(id);
-        userRepository.update(user);
+        userService.updateUser(user);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteUser(@PathParam("id") String id) {
-        userRepository.delete(id);
+        userService.deleteUser(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

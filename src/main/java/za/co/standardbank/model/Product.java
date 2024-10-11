@@ -6,6 +6,10 @@ public class Product {
 
     private String id;
     private String name;
+
+    public Product() {
+    }
+
     private Double price;
 
     public Product(String id, String name, Double price) {

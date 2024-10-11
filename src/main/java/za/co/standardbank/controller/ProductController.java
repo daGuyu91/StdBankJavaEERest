@@ -1,8 +1,9 @@
 package za.co.standardbank.controller;
 
 import za.co.standardbank.model.Product;
-import za.co.standardbank.repository.ProductRepository;
+import za.co.standardbank.service.product.ProductService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -10,41 +11,46 @@ import java.util.List;
 
 @Path("/products")
 public class ProductController {
-    private final ProductRepository productRepository = new ProductRepository();
+
+    @Inject
+    private ProductService productService;
+
+    public ProductController() {
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Product> getAllproducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts() {
+        return productService.findAllProduct();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Product getproductById(@PathParam("id") String id) {
-        return productRepository.findById(id);
+    public Product getProductById(@PathParam("id") String id) {
+        return productService.findById(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createproduct(Product product) {
-        productRepository.save(product);
+    public Response createProduct(Product product) {
+        productService.createProduct(product);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateproduct(@PathParam("id") String id, Product product) {
+    public Response updateProduct(@PathParam("id") String id, Product product) {
         product.setId(id);
-        productRepository.update(product);
+        productService.updateProduct(product);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response deleteproduct(@PathParam("id") String id) {
-        productRepository.delete(id);
+    public Response deleteProduct(@PathParam("id") String id) {
+        productService.deleteProduct(id);
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 }

@@ -6,9 +6,11 @@ import org.bson.Document;
 import za.co.standardbank.config.MongoDBConfig;
 import za.co.standardbank.model.User;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class UserRepository {
     private final MongoDatabase database = MongoDBConfig.getDatabase();
     private final MongoCollection<Document> userCollection = database.getCollection("users");
